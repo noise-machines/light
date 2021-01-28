@@ -1,0 +1,11 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.rs$",
+        "//": "killall nannou-playground ; cargo run --release",
+      }
+    ] 
+  },
+  "rust-client.engine": "rust-analyzer"
+}

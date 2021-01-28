@@ -1,0 +1,15 @@
+[package]
+name = "nannou-playground"
+version = "0.1.0"
+authors = ["noisemachines <thomas@noisemachines.io>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+nannou = "0.15"
+midir = "0.7.0"
+
+[profile.release]
+debug = false
+incremental = true
