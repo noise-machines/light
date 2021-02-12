@@ -1,5 +1,5 @@
 [package]
-name = "nannou-playground"
+name = "rust-template"
 version = "0.1.0"
 authors = ["noisemachines <thomas@noisemachines.io>"]
 edition = "2018"
@@ -9,6 +9,8 @@ edition = "2018"
 [dependencies]
 nannou = "0.15"
 midir = "0.7.0"
+fs_extra = "1.2.0"
+chrono = "0.4"
 
 [profile.release]
 debug = false
