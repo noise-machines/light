@@ -9,6 +9,7 @@ fn copy_contents(from: &Path, to: &Path) {
     fs_extra::dir::copy(&from, to, &options).unwrap();
 }
 
+#[allow(dead_code)]
 fn save_current_version_of_source_code() {
     let manifest_folder = Path::new(env!("CARGO_MANIFEST_DIR"));
     let source_folder = manifest_folder.join("src");

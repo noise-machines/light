@@ -11,6 +11,8 @@ nannou = "0.15"
 midir = "0.7.0"
 fs_extra = "1.2.0"
 chrono = "0.4"
+nanorand = "0.5.2"
+state = "0.4.2"
 
 [profile.release]
 debug = false

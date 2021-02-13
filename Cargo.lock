@@ -1377,6 +1377,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "nanorand"
+version = "0.5.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ac1378b66f7c93a1c0f8464a19bf47df8795083842e5090f4b7305973d5a22d0"
+
+[[package]]
 name = "ndk"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2175,6 +2181,8 @@ dependencies = [
  "fs_extra",
  "midir",
  "nannou",
+ "nanorand",
+ "state",
 ]
 
 [[package]]
@@ -2329,6 +2337,12 @@ dependencies = [
  "js-sys",
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "state"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3015a7d0a5fd5105c91c3710d42f9ccf0abfb287d62206484dcc67f9569a6483"
 
 [[package]]
 name = "stb_truetype"

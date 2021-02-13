@@ -1,0 +1,5 @@
+mv -r src src_backup
+mv -r versions/$1 src
+cargo run --release
+mv -r src versions/$1
+mv src_backup src

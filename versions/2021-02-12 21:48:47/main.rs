@@ -11,14 +11,16 @@ fn main() {
 struct Model {}
 
 fn start(app: &App) -> Model {
+    prelude::save_current_version_of_source_code();
     app.set_loop_mode(LoopMode::loop_once());
 
     Model {}
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let mut rand = prelude::save_state();
-    let random_number = rand.generate_range::<u64>(1, 1000);
+    let mut rand = prelude::get_rand_with_constant_seed();
+
+    let random_number = rand.generate_range::<u64>(0, 100);
     println!("{:?}", random_number);
 
     light::draw(app, frame, rand);

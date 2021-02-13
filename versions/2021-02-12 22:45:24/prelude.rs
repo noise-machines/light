@@ -9,6 +9,7 @@ fn copy_contents(from: &Path, to: &Path) {
     fs_extra::dir::copy(&from, to, &options).unwrap();
 }
 
+#[allow(dead_code)]
 fn save_current_version_of_source_code() {
     let manifest_folder = Path::new(env!("CARGO_MANIFEST_DIR"));
     let source_folder = manifest_folder.join("src");
@@ -28,7 +29,7 @@ fn save_seed(seed: u64) {
 fn delete_seed() {
     let manifest_folder = Path::new(env!("CARGO_MANIFEST_DIR"));
     let seed_path = manifest_folder.join("src").join("seed");
-    fs::remove_file(seed_path).unwrap();
+    fs::remove_dir_all(seed_path).unwrap();
 }
 
 pub fn save_state() -> nanorand::WyRand {
