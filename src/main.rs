@@ -17,8 +17,7 @@ fn start(app: &App) -> Model {
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let rand = prelude::save_state();
-    debug!("Derp");
+    let rand = prelude::save_checkpoint();
 
     light::draw(app, frame, rand);
     app.main_window()
