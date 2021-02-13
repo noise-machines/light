@@ -1,6 +1,6 @@
 mod light;
 #[macro_use]
-mod checkpoint;
+mod prelude;
 
 use nannou::prelude::*;
 
@@ -17,7 +17,7 @@ fn start(app: &App) -> Model {
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let rand = checkpoint::save();
+    let rand = prelude::save_checkpoint();
 
     light::draw(app, frame, rand);
     app.main_window()
