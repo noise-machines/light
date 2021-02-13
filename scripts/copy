@@ -1,2 +1,2 @@
-rm -r copy_test
-cp -r versions/"$1 $2" copy_test
+mv herp derp &&
+echo "it worked"

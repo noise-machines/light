@@ -1,4 +1,5 @@
 mod light;
+#[macro_use]
 mod prelude;
 
 use nannou::prelude::*;
@@ -17,6 +18,7 @@ fn start(app: &App) -> Model {
 
 fn view(app: &App, _model: &Model, frame: Frame) {
     let rand = prelude::save_state();
+    debug!("Derp");
 
     light::draw(app, frame, rand);
     app.main_window()
