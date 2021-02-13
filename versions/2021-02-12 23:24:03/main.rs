@@ -2,6 +2,7 @@ mod light;
 mod prelude;
 
 use nannou::prelude::*;
+use nanorand::RNG;
 
 fn main() {
     nannou::app(start).simple_window(view).run();
@@ -16,7 +17,9 @@ fn start(app: &App) -> Model {
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let rand = prelude::save_state();
+    let mut rand = prelude::save_state();
+    let random_number = rand.generate_range::<u64>(1, 1000);
+    println!("{:?}", random_number);
 
     light::draw(app, frame, rand);
     app.main_window()
