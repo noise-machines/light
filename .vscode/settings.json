@@ -3,12 +3,12 @@
     "commands": [
       {
         "match": "\\.rs$",
-        "cmd": "killall rust-template ; cargo run --release",
+        "//cmd": "killall rust-template ; cargo run --release",
       }
     ] 
   },
   "rust-client.engine": "rust-analyzer",
   "search.exclude": {
-    "checkpoints/**/*": true
+    "snapshots/**/*": true
   }
 }

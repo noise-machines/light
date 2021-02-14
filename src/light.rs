@@ -1,5 +1,5 @@
-use crate::checkpoint::rand::Rand;
 use crate::helpers::Helpers;
+use crate::snapshot::rand::Rand;
 use nannou::prelude::*;
 
 pub fn draw(app: &App, frame: &Frame, rand: &mut Rand, helpers: &Helpers) {
@@ -13,7 +13,6 @@ pub fn draw(app: &App, frame: &Frame, rand: &mut Rand, helpers: &Helpers) {
 
     let x = helpers.w(random_number) - x_radius;
     let y = helpers.h(0.0);
-    dbg!(x);
 
     draw.background().color(PLUM);
     draw.ellipse().x_y(x, y).color(STEELBLUE);

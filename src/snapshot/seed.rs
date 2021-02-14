@@ -40,7 +40,7 @@ impl Seed {
 
     pub fn clean_up_file(&self) {
         // The seed file is already saved in the
-        // appropriate checkpoints/ subfolder, together
+        // appropriate snapshots/ subfolder, together
         // with our source code.
         //
         // We delete it here so that we get a new seed

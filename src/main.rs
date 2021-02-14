@@ -1,6 +1,6 @@
-mod checkpoint;
 mod helpers;
 mod light;
+mod snapshot;
 use helpers::Helpers;
 
 use nannou::prelude::*;
@@ -8,7 +8,7 @@ use nannou::prelude::*;
 fn main() {
     nannou::app(start)
         .simple_window(view)
-        .exit(checkpoint::exit)
+        .exit(snapshot::exit)
         .run();
 }
 
@@ -21,10 +21,10 @@ fn start(app: &App) -> Model {
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let mut current_checkpoint = checkpoint::save(app);
+    let mut current_snapshot = snapshot::save(app);
     let helpers = Helpers::new(app);
 
-    light::draw(app, &frame, &mut current_checkpoint.rand, &helpers);
+    light::draw(app, &frame, &mut current_snapshot.rand, &helpers);
 
-    current_checkpoint.clean_up(app);
+    current_snapshot.clean_up(app);
 }

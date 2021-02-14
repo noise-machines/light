@@ -6,20 +6,19 @@ mod source_code;
 
 use rand::Rand;
 use seed::Seed;
-
-pub struct Checkpoint {
+pub struct Snapshot {
     pub rand: Rand,
     pub name: String,
     pub seed: u64,
 }
 
-impl Checkpoint {
+impl Snapshot {
     pub fn clean_up(&self, _app: &nannou::prelude::App) {
-        image::symlink_into_checkpoints_directory(self);
+        image::symlink_into_snapshots_directory(self);
     }
 
-    fn create(frame_number: u64) -> Checkpoint {
-        let name = Checkpoint::get_name(frame_number);
+    fn create(frame_number: u64) -> Snapshot {
+        let name = Snapshot::get_name(frame_number);
 
         let seed = Seed::load();
         seed.save_to_file();
@@ -29,7 +28,7 @@ impl Checkpoint {
         dbg!(&name);
         dbg!(seed.value);
 
-        Checkpoint {
+        Snapshot {
             name,
             seed: seed.value,
             rand: Rand::from_seed(seed.value),
@@ -44,11 +43,11 @@ impl Checkpoint {
     }
 }
 
-pub fn save(app: &nannou::prelude::App) -> Checkpoint {
-    let checkpoint = Checkpoint::create(app.elapsed_frames());
-    image::capture_frame(&checkpoint, app);
+pub fn save(app: &nannou::prelude::App) -> Snapshot {
+    let snapshot = Snapshot::create(app.elapsed_frames());
+    image::capture_frame(&snapshot, app);
 
-    checkpoint
+    snapshot
 }
 
 pub fn exit(app: &nannou::prelude::App, _model: crate::Model) {

@@ -9,9 +9,9 @@ fn copy_contents(from: &Path, to: &Path) {
     fs_extra::dir::copy(&from, to, &options).unwrap();
 }
 
-pub fn save_current_version(checkpoint_name: &str) {
+pub fn save_current_version(snapshot_name: &str) {
     let source_folder = manifest::folder().join("src");
-    let target_folder = manifest::folder().join("checkpoints").join(checkpoint_name);
+    let target_folder = manifest::folder().join("snapshots").join(snapshot_name);
 
     copy_contents(&source_folder, &target_folder);
 }

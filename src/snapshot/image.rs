@@ -1,5 +1,5 @@
-use crate::checkpoint::manifest;
-use crate::checkpoint::Checkpoint;
+use crate::snapshot::manifest;
+use crate::snapshot::Snapshot;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
@@ -36,30 +36,30 @@ fn clean_up_uncompressed_file(uncompressed_path: String) {
     fs::remove_file(uncompressed_path).unwrap();
 }
 
-pub fn capture_frame(checkpoint: &Checkpoint, app: &nannou::prelude::App) {
-    let image_path = uncompressed_path(&checkpoint);
+pub fn capture_frame(snapshot: &Snapshot, app: &nannou::prelude::App) {
+    let image_path = uncompressed_path(&snapshot);
     app.main_window().capture_frame(image_path);
 }
 
-pub fn symlink_into_checkpoints_directory(checkpoint: &Checkpoint) {
-    let original_image_path = compressed_path(checkpoint);
-    let symlink_path = symlink_path(checkpoint);
+pub fn symlink_into_snapshots_directory(snapshot: &Snapshot) {
+    let original_image_path = compressed_path(snapshot);
+    let symlink_path = symlink_path(snapshot);
     std::os::unix::fs::symlink(original_image_path, symlink_path).unwrap();
 }
 
-fn symlink_path(checkpoint: &Checkpoint) -> PathBuf {
+fn symlink_path(snapshot: &Snapshot) -> PathBuf {
     manifest::folder()
-        .join("checkpoints")
-        .join(&checkpoint.name)
-        .join(compressed_name(checkpoint))
+        .join("snapshots")
+        .join(&snapshot.name)
+        .join(compressed_name(snapshot))
 }
 
-fn compressed_path(checkpoint: &Checkpoint) -> PathBuf {
-    path(&compressed_name(checkpoint))
+fn compressed_path(snapshot: &Snapshot) -> PathBuf {
+    path(&compressed_name(snapshot))
 }
 
-fn uncompressed_path(checkpoint: &Checkpoint) -> PathBuf {
-    path(&uncompressed_name(checkpoint))
+fn uncompressed_path(snapshot: &Snapshot) -> PathBuf {
+    path(&uncompressed_name(snapshot))
 }
 
 fn path(name: &str) -> PathBuf {
@@ -70,15 +70,15 @@ fn images_folder_path() -> PathBuf {
     manifest::folder().join("images")
 }
 
-fn compressed_name(checkpoint: &Checkpoint) -> String {
-    format!("{} {}{}", manifest::crate_name(), checkpoint.name, ".tif")
+fn compressed_name(snapshot: &Snapshot) -> String {
+    format!("{} {}{}", manifest::crate_name(), snapshot.name, ".tif")
 }
 
-fn uncompressed_name(checkpoint: &Checkpoint) -> String {
+fn uncompressed_name(snapshot: &Snapshot) -> String {
     format!(
         "{} {} uncompressed{}",
         manifest::crate_name(),
-        checkpoint.name,
+        snapshot.name,
         ".tif"
     )
 }
