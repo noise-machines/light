@@ -1,6 +1,7 @@
-mod light;
-#[macro_use]
 mod checkpoint;
+mod helpers;
+mod light;
+use helpers::Helpers;
 
 use nannou::prelude::*;
 
@@ -11,15 +12,19 @@ fn main() {
 struct Model {}
 
 fn start(app: &App) -> Model {
-    app.set_loop_mode(LoopMode::loop_once());
+    app.set_loop_mode(LoopMode::loop_ntimes(3));
 
     Model {}
 }
 
 fn view(app: &App, _model: &Model, frame: Frame) {
-    let rand = checkpoint::save();
+    let mut current_checkpoint = checkpoint::save(frame.nth());
+    let helpers = Helpers::new(app);
 
-    light::draw(app, frame, rand);
     app.main_window()
-        .capture_frame(app.exe_name().unwrap() + ".png");
+        .capture_frame(current_checkpoint.image_path());
+
+    light::draw(app, &frame, &mut current_checkpoint.rand, &helpers);
+
+    current_checkpoint.symlink_image_into_checkpoints_directory();
 }
