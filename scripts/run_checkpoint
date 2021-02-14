@@ -14,7 +14,7 @@ echo "Backing up current source code." &&
 mv src src_backup &&
 
 echo "Copying checkpoint $1 $2 to source directory." &&
-cp -r checkpoints/"$1 $2" src &&
+cp -r checkpoints/"$1 $2 $3" src &&
 
 echo "Running checkpoint $1 $2." &&
 echo "" &&

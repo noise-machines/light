@@ -1,3 +1,4 @@
+mod image;
 mod manifest;
 pub mod rand;
 mod seed;
@@ -5,7 +6,6 @@ mod source_code;
 
 use rand::Rand;
 use seed::Seed;
-use std::path::PathBuf;
 
 pub struct Checkpoint {
     pub rand: Rand,
@@ -14,49 +14,43 @@ pub struct Checkpoint {
 }
 
 impl Checkpoint {
-    pub fn image_path(&self) -> PathBuf {
-        manifest::folder().join("images").join(self.image_name())
+    pub fn clean_up(&self, _app: &nannou::prelude::App) {
+        image::symlink_into_checkpoints_directory(self);
     }
 
-    pub fn symlink_image_into_checkpoints_directory(&self) {
-        let image_path = self.image_path();
-        let symlink_path = self.image_symlink_path();
-        std::os::unix::fs::symlink(image_path, symlink_path).unwrap();
+    fn create(frame_number: u64) -> Checkpoint {
+        let name = Checkpoint::get_name(frame_number);
+
+        let seed = Seed::load();
+        seed.save_to_file();
+        source_code::save_current_version(&name);
+        seed.clean_up_file();
+
+        dbg!(&name);
+        dbg!(seed.value);
+
+        Checkpoint {
+            name,
+            seed: seed.value,
+            rand: Rand::from_seed(seed.value),
+        }
     }
 
-    fn image_symlink_path(&self) -> PathBuf {
-        manifest::folder()
-            .join("checkpoints")
-            .join(&self.name)
-            .join(self.image_name())
-    }
+    fn get_name(frame_number: u64) -> String {
+        let name: String = frame_number.to_string();
+        let current_time = chrono::Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
 
-    fn image_name(&self) -> String {
-        format!("{}{}", &self.name, ".png")
+        format!("{} {}", current_time, name)
     }
 }
 
-fn get_checkpoint_name(frame_number: u64) -> String {
-    let checkpoint_name: String = frame_number.to_string();
-    let current_time = chrono::Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
+pub fn save(app: &nannou::prelude::App) -> Checkpoint {
+    let checkpoint = Checkpoint::create(app.elapsed_frames());
+    image::capture_frame(&checkpoint, app);
 
-    format!("{} {}", current_time, checkpoint_name)
+    checkpoint
 }
 
-pub fn save(frame_number: u64) -> Checkpoint {
-    let checkpoint_name = get_checkpoint_name(frame_number);
-
-    let seed = Seed::load();
-    seed.save_to_file();
-    source_code::save_current_version(&checkpoint_name);
-    seed.clean_up_file();
-
-    dbg!(&checkpoint_name);
-    dbg!(seed.value);
-
-    Checkpoint {
-        name: checkpoint_name,
-        seed: seed.value,
-        rand: Rand::from_seed(seed.value),
-    }
+pub fn exit(app: &nannou::prelude::App, _model: crate::Model) {
+    image::clean_up(app);
 }

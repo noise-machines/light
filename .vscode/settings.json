@@ -3,7 +3,7 @@
     "commands": [
       {
         "match": "\\.rs$",
-        "//": "killall nannou-playground ; cargo run --release",
+        "cmd": "killall rust-template ; cargo run --release",
       }
     ] 
   },
